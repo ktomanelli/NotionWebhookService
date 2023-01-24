@@ -17,5 +17,9 @@ const initialize = async () => {
 
 initialize();
 setInterval(async ()=>{
-    await webHookService.PollForChanges(true);
+    try{
+        await webHookService.PollForChanges();
+    }catch(e){
+        console.log(e);
+    }
 },10000)
