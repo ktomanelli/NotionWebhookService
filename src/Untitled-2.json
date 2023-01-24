@@ -1,0 +1,62 @@
+{
+    "object": "page",
+    "id": "5b53581a-baa6-46e1-9884-6f2a3336f215",
+    "created_time": "2020-08-21T20:06:00.000Z",
+    "last_edited_time": "2020-10-05T16:06:00.000Z",
+    "created_by": {
+        "object": "user",
+        "id": "beb05d08-e918-4005-90d9-b2bff0e5135b"
+    },
+    "last_edited_by": {
+        "object": "user",
+        "id": "beb05d08-e918-4005-90d9-b2bff0e5135b"
+    },
+    "cover": null,
+    "icon": null,
+    "parent": {
+        "type": "database_id",
+        "database_id": "888cf9d0-bfce-4a10-8a64-c26c4b214a22"
+    },
+    "archived": false,
+    "properties": {
+        "Pillars": {
+            "id": "N%5CBP",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+        },
+        "status": {
+            "id": "%7D3(S",
+            "type": "select",
+            "select": {
+                "id": "62a347e2-da92-4a8b-9ba1-6c931ef49eee",
+                "name": "Completed",
+                "color": "green"
+            }
+        },
+        "Name": {
+            "id": "title",
+            "type": "title",
+            "title": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "BP - set up email forwarding for custom domain",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "BP - set up email forwarding for custom domain",
+                    "href": null
+                }
+            ]
+        }
+    },
+    "url": "https://www.notion.so/BP-set-up-email-forwarding-for-custom-domain-5b53581abaa646e198846f2a3336f215"
+}
