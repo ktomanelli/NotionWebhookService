@@ -13,7 +13,7 @@ export class WebHookService {
         this.notionService = notion
     }
     
-    public async PollForChanges(enableWebHook = false){
+    public async PollForChanges(){
         const pagesObj = await this.notionService.getPagesObj() as any;
         const cacheResult = await this.redisService.getAll(notionUserId)
         const cacheArray:string[] = Object.values(cacheResult);
@@ -28,20 +28,16 @@ export class WebHookService {
                         console.log('updating entry')
                         //update obj with current
                         await this.redisService.set(notionUserId, page.id, JSON.stringify(page))
-                        if(enableWebHook){
-                            //send UPDATED webhook
-                            console.log('page updated')
-                            axios.put('http://localhost:3000/notion', page)
-                        }
+                        //send UPDATED webhook
+                        console.log('page updated')
+                        axios.put('http://localhost:3000/notion', page)
                     }
                 }else{
                     //page was deleted
                     this.redisService.del(notionUserId, cachedPage.id)
-                    if(enableWebHook){
-                        //send CREATED webhook
-                        console.log('page deleted')
-                        axios.delete('http://localhost:3000/notion', page)
-                    }
+                    //send CREATED webhook
+                    console.log('page deleted')
+                    axios.delete('http://localhost:3000/notion', page)
                 }
                 delete pagesObj[cachedPage.id];
             }
@@ -50,11 +46,9 @@ export class WebHookService {
                 //pages that were created
                 for(const page of createdPages){
                     await this.redisService.set(notionUserId, page.id, JSON.stringify(page))
-                    if(enableWebHook){
-                        //send CREATED webhook
-                        console.log('page created')
-                        axios.post('http://localhost:3000/notion', page)
-                    }
+                    //send CREATED webhook
+                    console.log('page created')
+                    axios.post('http://localhost:3000/notion', page)
                 }
             }
         }else{
