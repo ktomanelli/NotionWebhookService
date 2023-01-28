@@ -30,14 +30,14 @@ export class WebHookService {
                         await this.redisService.set(notionUserId, page.id, JSON.stringify(page))
                         //send UPDATED webhook
                         console.log('page updated')
-                        axios.put('http://localhost:3000/notion', page)
+                        await axios.put('http://localhost:3000/notion', page)
                     }
                 }else{
                     //page was deleted
                     this.redisService.del(notionUserId, cachedPage.id)
                     //send CREATED webhook
                     console.log('page deleted')
-                    axios.delete('http://localhost:3000/notion', page)
+                    await axios.delete('http://localhost:3000/notion', page)
                 }
                 delete pagesObj[cachedPage.id];
             }
@@ -48,7 +48,7 @@ export class WebHookService {
                     await this.redisService.set(notionUserId, page.id, JSON.stringify(page))
                     //send CREATED webhook
                     console.log('page created')
-                    axios.post('http://localhost:3000/notion', page)
+                    await axios.post('http://localhost:3000/notion', page)
                 }
             }
         }else{

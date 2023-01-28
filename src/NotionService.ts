@@ -1,5 +1,5 @@
 import { Client as NotionClient} from "@notionhq/client";
-import { PartialDatabaseObjectResponse, PartialPageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { DatabaseObjectResponse, PartialDatabaseObjectResponse, PartialPageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 type QueryType = 'database' | 'page'
 
 type GetItemsInput = {
@@ -13,7 +13,10 @@ export class NotionService{
         this.notion = notionClient;
     }
 
-    public async getDatabase(): Promise<(PartialPageObjectResponse | PartialDatabaseObjectResponse)[]> {
+    public async getDataBase(databaseId: string):Promise<PartialDatabaseObjectResponse>{
+        return this.notion.databases.retrieve({database_id:databaseId});
+    }
+    public async getDatabases(): Promise<(PartialPageObjectResponse | PartialDatabaseObjectResponse)[]> {
         return this.getItems({queryType:'database'})
     }
     
@@ -38,14 +41,18 @@ export class NotionService{
     
     private async searchNotion(options: GetItemsInput) {
         const {query, startCursor, queryType} = options;
-        const databaseListResp = await this.notion.search({
-            query,
-            start_cursor: startCursor || undefined,
-            filter:{
-                value: queryType,
-                property: "object",
-            }
-        });
-        return databaseListResp;
+        try{
+            const databaseListResp = await this.notion.search({
+                query,
+                start_cursor: startCursor || undefined,
+                filter:{
+                    value: queryType,
+                    property: "object",
+                }
+            });
+            return databaseListResp;
+        }catch(e: any){
+            throw new Error(`Error in Notion Search. ${e.status}: ${e.message}`)
+        }
     }
 }
